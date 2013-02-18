@@ -50,7 +50,7 @@ game = {
 
 snake = {
   
-  size: 8,
+  size: canvas.width / 40,
   x: null,
   y: null,
   color: '#0FF',
