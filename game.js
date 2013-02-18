@@ -116,7 +116,7 @@ snake = {
   checkGrowth: function() {
     if (snake.x == food.x && snake.y == food.y) {
       game.score++;
-      if (game.score % 8 == 0 && game.fps < 60) {
+      if (game.score % 5 == 0 && game.fps < 60) {
         game.fps++;
       }
       food.set();
@@ -133,7 +133,6 @@ food = {
   x: null,
   y: null,
   color: '#0F0',
-  liftime: null,
   
   set: function() {
     food.size = snake.size;
@@ -181,8 +180,7 @@ addEventListener("keydown", function (e) {
     }
 }, false);
 
-var requestAnimationFrame = 
-      requestAnimationFrame ||
+var requestAnimationFrame =  requestAnimationFrame ||
       webkitRequestAnimationFrame ||
       mozRequestAnimationFrame ||
       msRequestAnimationFrame ||
