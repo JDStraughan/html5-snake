@@ -3,10 +3,12 @@ hgroup, menu, nav, section {
   display: block; 
 }
 body {
-  background-color: #333;
+  background-color: #CCC;
 }
 h1 {
-  color: #FFF;
+  text-align: center;
+}
+p {
   text-align: center;
 }
 canvas {
