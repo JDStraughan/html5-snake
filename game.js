@@ -9,8 +9,8 @@ game = {
   
   start: function() {
     game.over = false;
-    this.score = 0;
-    this.fps = 8;
+    game.score = 0;
+    game.fps = 8;
     snake.init();
     food.set();
   },
@@ -51,47 +51,47 @@ snake = {
   sections: [],
   
   init: function() {
-    this.sections = [];
-    this.direction = 'left';
-    this.x = canvas.width / 2 + snake.size / 2;
-    this.y = canvas.height /2 + snake.size / 2;
-    for (i = this.x + (5 * snake.size); i >= this.x; i-=snake.size) {
-      this.sections.push(i + ',' + this.y); 
+    snake.sections = [];
+    snake.direction = 'left';
+    snake.x = canvas.width / 2 + snake.size / 2;
+    snake.y = canvas.height /2 + snake.size / 2;
+    for (i = snake.x + (5 * snake.size); i >= snake.x; i-=snake.size) {
+      snake.sections.push(i + ',' + snake.y); 
     }
   },
   
   move: function() {
-    switch(this.direction) {
+    switch(snake.direction) {
       case 'up':
-        this.y-=snake.size;
+        snake.y-=snake.size;
         break;
       case 'down':
-        this.y+=snake.size;
+        snake.y+=snake.size;
         break;
       case 'left':
-        this.x-=snake.size;
+        snake.x-=snake.size;
         break;
       case 'right':
-        this.x+=snake.size;
+        snake.x+=snake.size;
         break;
     }
-    this.checkCollision();
-    this.checkGrowth();
-    this.sections.push(this.x + ',' + this.y);
+    snake.checkCollision();
+    snake.checkGrowth();
+    snake.sections.push(snake.x + ',' + snake.y);
   },
   
   draw: function() {
-    for (i = 0; i < this.sections.length; i++) {
-      this.drawSection(this.sections[i].split(','));
+    for (i = 0; i < snake.sections.length; i++) {
+      snake.drawSection(snake.sections[i].split(','));
     }    
   },
   
   drawSection: function(section) {
-    game.drawBox(parseInt(section[0]), parseInt(section[1]), this.size, this.color);
+    game.drawBox(parseInt(section[0]), parseInt(section[1]), snake.size, snake.color);
   },
   
   checkCollision: function() {
-    if (this.isCollision(this.x, this.y) === true) {
+    if (snake.isCollision(snake.x, snake.y) === true) {
       game.stop();
     }
   },
@@ -101,7 +101,7 @@ snake = {
         x > canvas.width ||
         y < snake.size/2 ||
         y > canvas.height ||
-        this.sections.indexOf(x+','+y) >= 0) {
+        snake.sections.indexOf(x+','+y) >= 0) {
       return true;
     }
   },
@@ -114,7 +114,7 @@ snake = {
       }
       food.set();
     } else {
-      this.sections.shift();
+      snake.sections.shift();
     }
   }
   
@@ -122,19 +122,20 @@ snake = {
 
 food = {
   
-  size: 8,
+  size: null,
   x: null,
   y: null,
   color: '#0F0',
   liftime: null,
   
   set: function() {
-    food.x =  (Math.ceil(Math.random() * 10) * snake.size * 3) - snake.size / 2;
-    food.y = (Math.ceil(Math.random() * 10) * snake.size * 2) - snake.size / 2;
+    food.size = snake.size;
+    food.x = (Math.ceil(Math.random() * 10) * snake.size * 4) - snake.size / 2;
+    food.y = (Math.ceil(Math.random() * 10) * snake.size * 3) - snake.size / 2;
   },
   
   draw: function() {
-    game.drawBox(this.x, this.y, this.size, this.color);
+    game.drawBox(food.x, food.y, food.size, food.color);
   }
   
 };
