@@ -6,9 +6,11 @@ game = {
   score: 0,
   fps: 8,
   over: false,
+  message: null,
   
   start: function() {
     game.over = false;
+    game.message = null;
     game.score = 0;
     game.fps = 8;
     snake.init();
@@ -17,11 +19,7 @@ game = {
   
   stop: function() {
     game.over = true;
-    context.fillStyle = '#FFF';
-    context.font = (canvas.height / 15) + 'px sans-serif';
-    context.textAlign = 'center';
-    context.fillText('GAME OVER', canvas.width/2, canvas.height/2);
-    context.fillText('press spacebar to contine', canvas.width/2, canvas.height/2 + (snake.size * 3));
+    game.message = 'GAME OVER - PRESS SPACEBAR';
   },
   
   drawBox: function(x, y, size, color) {
@@ -42,6 +40,17 @@ game = {
     context.fillText(game.score, canvas.width/2, canvas.height  * .9);
   },
   
+  drawMessage: function() {
+    if (game.message !== null) {
+      context.fillStyle = '#00F';
+      context.strokeStyle = '#FFF';
+      context.font = (canvas.height / 10) + 'px Impact';
+      context.textAlign = 'center';
+      context.fillText(game.message, canvas.width/2, canvas.height/2);
+      context.strokeText(game.message, canvas.width/2, canvas.height/2);
+    }
+  },
+  
   resetCanvas: function() {
     context.clearRect(0, 0, canvas.width, canvas.height);
   }
@@ -53,7 +62,7 @@ snake = {
   size: canvas.width / 40,
   x: null,
   y: null,
-  color: '#0FF',
+  color: '#0F0',
   direction: 'left',
   sections: [],
   
@@ -132,7 +141,7 @@ food = {
   size: null,
   x: null,
   y: null,
-  color: '#0F0',
+  color: '#0FF',
   
   set: function() {
     food.size = snake.size;
@@ -192,7 +201,8 @@ function loop() {
     game.drawScore();
     snake.move();
     food.draw();
-    snake.draw();    
+    snake.draw();
+    game.drawMessage();
   }
   setTimeout(function() {
     requestAnimationFrame(loop);
