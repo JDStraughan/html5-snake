@@ -189,11 +189,9 @@ addEventListener("keydown", function (e) {
     }
 }, false);
 
-var requestAnimationFrame =  requestAnimationFrame ||
-      webkitRequestAnimationFrame ||
-      mozRequestAnimationFrame ||
-      msRequestAnimationFrame ||
-      oRequestAnimationFrame;
+var requestAnimationFrame =  window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame;
 
 function loop() {
   if (game.over == false) {
