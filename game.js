@@ -1,5 +1,6 @@
 var canvas = document.getElementById("the-game");
 var context = canvas.getContext("2d");
+var game, snake, food;
 
 game = {
   
@@ -37,7 +38,7 @@ game = {
     context.fillStyle = '#999';
     context.font = (canvas.height) + 'px Impact, sans-serif';
     context.textAlign = 'center';
-    context.fillText(game.score, canvas.width/2, canvas.height  * .9);
+    context.fillText(game.score, canvas.width / 2, canvas.height * 0.9);
   },
   
   drawMessage: function() {
@@ -46,8 +47,8 @@ game = {
       context.strokeStyle = '#FFF';
       context.font = (canvas.height / 10) + 'px Impact';
       context.textAlign = 'center';
-      context.fillText(game.message, canvas.width/2, canvas.height/2);
-      context.strokeText(game.message, canvas.width/2, canvas.height/2);
+      context.fillText(game.message, canvas.width / 2, canvas.height / 2);
+      context.strokeText(game.message, canvas.width / 2, canvas.height / 2);
     }
   },
   
@@ -70,25 +71,25 @@ snake = {
     snake.sections = [];
     snake.direction = 'left';
     snake.x = canvas.width / 2 + snake.size / 2;
-    snake.y = canvas.height /2 + snake.size / 2;
-    for (i = snake.x + (5 * snake.size); i >= snake.x; i-=snake.size) {
+    snake.y = canvas.height / 2 + snake.size / 2;
+    for (var i = snake.x + (5 * snake.size); i >= snake.x; i -= snake.size) {
       snake.sections.push(i + ',' + snake.y); 
     }
   },
   
   move: function() {
-    switch(snake.direction) {
+    switch (snake.direction) {
       case 'up':
-        snake.y-=snake.size;
+        snake.y -= snake.size;
         break;
       case 'down':
-        snake.y+=snake.size;
+        snake.y += snake.size;
         break;
       case 'left':
-        snake.x-=snake.size;
+        snake.x -= snake.size;
         break;
       case 'right':
-        snake.x+=snake.size;
+        snake.x += snake.size;
         break;
     }
     snake.checkCollision();
@@ -97,7 +98,7 @@ snake = {
   },
   
   draw: function() {
-    for (i = 0; i < snake.sections.length; i++) {
+    for (var i = 0; i < snake.sections.length; i++) {
       snake.drawSection(snake.sections[i].split(','));
     }    
   },
@@ -113,11 +114,11 @@ snake = {
   },
   
   isCollision: function(x, y) {
-    if (x < snake.size/2 ||
+    if (x < snake.size / 2 ||
         x > canvas.width ||
-        y < snake.size/2 ||
+        y < snake.size / 2 ||
         y > canvas.height ||
-        snake.sections.indexOf(x+','+y) >= 0) {
+        snake.sections.indexOf(x + ',' + y) >= 0) {
       return true;
     }
   },
@@ -155,14 +156,14 @@ food = {
   
 };
 
-inverseDirection = {
-  'up':'down',
-  'left':'right',
-  'right':'left',
-  'down':'up'
+var inverseDirection = {
+  'up': 'down',
+  'left': 'right',
+  'right': 'left',
+  'down': 'up'
 };
 
-keys = {
+var keys = {
   up: [38, 75, 87],
   down: [40, 74, 83],
   left: [37, 65, 72],
@@ -170,17 +171,17 @@ keys = {
   start_game: [13, 32]
 };
 
-Object.prototype.getKey = function(value){
-  for(var key in this){
-    if(this[key] instanceof Array && this[key].indexOf(value) >= 0){
+function getKey(value){
+  for (var key in keys){
+    if (keys[key] instanceof Array && keys[key].indexOf(value) >= 0){
       return key;
     }
   }
   return null;
-};
+}
 
 addEventListener("keydown", function (e) {
-    lastKey = keys.getKey(e.keyCode);
+    var lastKey = getKey(e.keyCode);
     if (['up', 'down', 'left', 'right'].indexOf(lastKey) >= 0
         && lastKey != inverseDirection[snake.direction]) {
       snake.direction = lastKey;
@@ -189,7 +190,7 @@ addEventListener("keydown", function (e) {
     }
 }, false);
 
-var requestAnimationFrame =  window.requestAnimationFrame ||
+var requestAnimationFrame = window.requestAnimationFrame ||
       window.webkitRequestAnimationFrame ||
       window.mozRequestAnimationFrame;
 
@@ -205,6 +206,6 @@ function loop() {
   setTimeout(function() {
     requestAnimationFrame(loop);
   }, 1000 / game.fps);
-};
+}
 
 requestAnimationFrame(loop);
