@@ -148,12 +148,14 @@ food = {
     food.size = snake.size;
     food.x = (Math.ceil(Math.random() * 10) * snake.size * 4) - snake.size / 2;
     food.y = (Math.ceil(Math.random() * 10) * snake.size * 3) - snake.size / 2;
-  },
+   },
   
   draw: function() {
+    while (snake.sections.indexOf(food.x + ',' + food.y) >= 0) {
+      food.set();      
+    }
     game.drawBox(food.x, food.y, food.size, food.color);
-  }
-  
+  }  
 };
 
 var inverseDirection = {
