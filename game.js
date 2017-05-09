@@ -186,14 +186,18 @@ food = {
     food.size = snake.size;
     food.x = (Math.ceil(Math.random() * 10) * snake.size * 4) - snake.size / 2; // random x-coordinate chosen for the food piece within game board dimensions
     food.y = (Math.ceil(Math.random() * 10) * snake.size * 3) - snake.size / 2; // random y-coordinate chosen for the food piece within game board dimensions
-  },
+   },
   
   // draws food piece on gameboard based on x-coord, y-coord, size, and color
-  draw: function() {
-    game.drawBox(food.x, food.y, food.size, food.color);
-  }
-  
-};
+   draw: function() {
+ +    while (snake.sections.indexOf(food.x + ',' + food.y) >= 0) {
+ +      food.set();      
+ +    }
+      game.drawBox(food.x, food.y, food.size, food.color);
+ -  }
+ -  
+ +  }  
+  };
 
 // sets values to change directional key commands
 var inverseDirection = {
