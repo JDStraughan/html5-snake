@@ -16,3 +16,6 @@ canvas {
   margin: 0 auto;
   background-color: #666;
 }
+* {
+  overflow: hidden;
+}
