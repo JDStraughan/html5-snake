@@ -2,17 +2,19 @@ article, aside, details, figcaption, figure, footer, header,
 hgroup, menu, nav, section { 
   display: block; 
 }
-body {
+html {
   background-color: #CCC;
 }
 h1 {
-  text-align: center;
+  text-align: left;
 }
 p {
-  text-align: center;
+  text-align: left;
 }
 canvas {
   display: block;
   margin: 0 auto;
+  position: fixed;
+  right: 5px;
   background-color: #666;
 }
