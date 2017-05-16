@@ -1,12 +1,14 @@
 /* jshint -W079 */
 /* ^ tells jshint to ignore 'Redifinition of RO variable' error when checking code or line 240 throws a (nonfatal) error */
 
-/* set up of game canvas' along with the expected game style (2D)
+/* set up of game canvas' along with the expected game style (2D), and resize the canvas to fit the screen
    game: game state holder
    snake: snake character to be moved by user
    food: objects to be collected by snake character */
 var canvas = document.getElementById("the-game");
 var context = canvas.getContext("2d");
+context.canvas.height = Math.floor(window.innerHeight / 15) * 15;
+context.canvas.width = Math.floor(context.canvas.height * (4 / 3));
 var game, snake, food;
 
 /* game properties */
@@ -245,6 +247,8 @@ var requestAnimationFrame = window.requestAnimationFrame ||
 /* loops through the game if game state isnt equal to over */
 function loop() {
   if (game.over === false) {
+    context.canvas.height = Math.floor(window.innerHeight / 15) * 15;
+	 context.canvas.width = Math.floor(context.canvas.height * (4 / 3));
     game.resetCanvas();
     game.drawScore();
     snake.move();
