@@ -21,6 +21,7 @@ You can fork/fix/add/pull request this repo, and I'll gladly add your code ;)
 ## Contributors
 
 If you issue a pull request, add your name here!
+THANKS!
 
 ## License
 
