@@ -3,7 +3,7 @@ hgroup, menu, nav, section {
   display: block; 
 }
 body {
-  background-color: #CCC;
+  background-color: #cccccc48;
 }
 h1 {
   text-align: center;
@@ -14,5 +14,5 @@ p {
 canvas {
   display: block;
   margin: 0 auto;
-  background-color: #666;
+  background-color: #666666a3;
 }
