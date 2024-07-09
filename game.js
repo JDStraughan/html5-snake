@@ -180,12 +180,16 @@ function getKey(value){
   return null;
 }
 
+var CanPressButton = true
+
+
 addEventListener("keydown", function (e) {
     var lastKey = getKey(e.keyCode);
-    if (['up', 'down', 'left', 'right'].indexOf(lastKey) >= 0
-        && lastKey != inverseDirection[snake.direction]) {
+    if (['up', 'down', 'left', 'right'].indexOf(lastKey) >= 0 
+        && lastKey != inverseDirection[snake.direction] && CanPressButton) {
       snake.direction = lastKey;
-    } else if (['start_game'].indexOf(lastKey) >= 0 && game.over) {
+      CanPressButton = false // disable input until next frame 
+    } else if (['start_game'].indexOf(lastKey) >= 0 && game.over) { 
       game.start();
     }
 }, false);
@@ -205,7 +209,8 @@ function loop() {
   }
   setTimeout(function() {
     requestAnimationFrame(loop);
-  }, 1000 / game.fps);
-}
+    CanPressButton = true // reenable input for next frame NOTE: This is a bandaid fix I devised with about 3 hours of JS knowledge, it doesn't actually address the root problem.
+  }, 1000 / game.fps);    // Ideally there would be a queue system to store the second input instead of dropping it entirely if there is two inputs on the same frame but I have no idea how to do that yet
+}                         // Maybe I'll be back in a few months once I've finished this course to actually fix it, but at least right now instead of randomly dying, the game just drops the second input :p
 
 requestAnimationFrame(loop);
